@@ -33,7 +33,7 @@ export const Wrapper = styled.li.attrs({ role: 'menuitem' })<{
 export const Title = styled.div`
   grid-area: title;
   white-space: nowrap;
-  max-width: 110px;
+  max-width: 160px;
   overflow: hidden;
   text-overflow: ellipsis;
   color: ${({ theme }) => theme.menu.titleColor};

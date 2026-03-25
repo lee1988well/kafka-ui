@@ -74,7 +74,7 @@ export interface ActiveMessageFilter {
   code: string;
 }
 
-const PER_PAGE = 100;
+const PER_PAGE = 10;
 
 export const SeekTypeOptions = [
   { value: SeekType.OFFSET, label: 'Offset' },
@@ -218,19 +218,19 @@ const Filters: React.FC<FiltersProps> = ({
       valueSerde: valueSerde || searchParams.get('valueSerde') || '',
     };
 
-    if (isSeekTypeControlVisible) {
-      switch (seekDirection) {
-        case SeekDirection.FORWARD:
-          props.seekType = SeekType.BEGINNING;
-          break;
-        case SeekDirection.BACKWARD:
-        case SeekDirection.TAILING:
-          props.seekType = SeekType.LATEST;
-          break;
-        default:
-          props.seekType = currentSeekType;
-      }
+    switch (seekDirection) {
+      case SeekDirection.FORWARD:
+        props.seekType = SeekType.BEGINNING;
+        break;
+      case SeekDirection.BACKWARD:
+      case SeekDirection.TAILING:
+        props.seekType = SeekType.LATEST;
+        break;
+      default:
+        props.seekType = currentSeekType;
+    }
 
+    if (isSeekTypeControlVisible) {
       if (offset && currentSeekType === SeekType.OFFSET) {
         props.seekType = SeekType.OFFSET;
       }

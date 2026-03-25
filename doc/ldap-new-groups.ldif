@@ -1,0 +1,11 @@
+# 管理员组
+dn: cn=admin_staff,ou=people,dc=planetexpress,dc=com
+objectClass: groupOfUniqueNames
+cn: admin_staff
+uniqueMember: cn=patsnap_admin,ou=people,dc=planetexpress,dc=com
+
+# 只读用户组
+dn: cn=ship_crew,ou=people,dc=planetexpress,dc=com
+objectClass: groupOfUniqueNames
+cn: ship_crew
+uniqueMember: cn=kafka_read,ou=people,dc=planetexpress,dc=com

@@ -1,0 +1,99 @@
+auth:
+  type: LDAP
+kafka:
+  clusters:
+  - bootstrapServers: 81.70.127.169:50000
+    name: 测试cn-ckafka-data
+    properties: {}
+    readOnly: false
+rbac:
+  roles:
+  - clusters:
+    - "*"
+    name: admin
+    permissions:
+    - actions:
+      - VIEW
+      - EDIT
+      resource: APPLICATIONCONFIG
+    - actions:
+      - VIEW
+      - EDIT
+      resource: CLUSTERCONFIG
+    - actions:
+      - VIEW
+      - CREATE
+      - EDIT
+      - DELETE
+      - MESSAGES_READ
+      - MESSAGES_PRODUCE
+      - MESSAGES_DELETE
+      resource: TOPIC
+      value: .*
+    - actions:
+      - VIEW
+      - DELETE
+      - RESET_OFFSETS
+      resource: CONSUMER
+      value: .*
+    - actions:
+      - VIEW
+      - CREATE
+      - DELETE
+      - EDIT
+      - MODIFY_GLOBAL_COMPATIBILITY
+      resource: SCHEMA
+      value: .*
+    - actions:
+      - VIEW
+      - EDIT
+      - CREATE
+      - RESTART
+      resource: CONNECT
+      value: .*
+    - actions:
+      - EXECUTE
+      resource: KSQL
+    - actions:
+      - VIEW
+      - EDIT
+      resource: ACL
+    subjects:
+    - provider: LDAP
+      type: group
+      value: admin_staff
+  - clusters:
+    - "*"
+    name: readonly
+    permissions:
+    - actions:
+      - VIEW
+      resource: APPLICATIONCONFIG
+    - actions:
+      - VIEW
+      resource: CLUSTERCONFIG
+    - actions:
+      - VIEW
+      - MESSAGES_READ
+      resource: TOPIC
+      value: .*
+    - actions:
+      - VIEW
+      resource: CONSUMER
+      value: .*
+    - actions:
+      - VIEW
+      resource: SCHEMA
+      value: .*
+    - actions:
+      - VIEW
+      resource: CONNECT
+      value: .*
+    - actions:
+      - VIEW
+      resource: ACL
+    subjects:
+    - provider: LDAP
+      type: group
+      value: ship_crew
+webclient: {}

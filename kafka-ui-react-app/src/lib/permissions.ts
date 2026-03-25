@@ -93,7 +93,7 @@ export function isPermitted({
   if (!roles || roles.size === 0) return false;
 
   // short circuit
-  const clusterMap = roles.get(clusterName);
+  const clusterMap = roles.get(clusterName) || roles.get('*');
   if (!clusterMap) return false;
 
   // short circuit
@@ -136,7 +136,7 @@ export function isPermittedToCreate({
   if (!roles || roles.size === 0) return false;
 
   // short circuit
-  const clusterMap = roles.get(clusterName);
+  const clusterMap = roles.get(clusterName) || roles.get('*');
   if (!clusterMap) return false;
 
   // short circuit

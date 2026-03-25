@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Cluster, ResourceType } from 'generated-sources';
+import { Action, Cluster, ResourceType } from 'generated-sources';
 import { CellContext } from '@tanstack/react-table';
 import { clusterConfigPath } from 'lib/paths';
 import { useGetUserInfo } from 'lib/hooks/api/roles';
@@ -14,9 +14,13 @@ const ClusterTableActionsCell: React.FC<Props> = ({ row }) => {
   const hasPermissions = useMemo(() => {
     if (!data?.rbacEnabled) return true;
     return !!data?.userInfo?.permissions.some(
-      (permission) => permission.resource === ResourceType.APPLICATIONCONFIG
+      (permission) =>
+        permission.resource === ResourceType.APPLICATIONCONFIG &&
+        permission.actions.includes(Action.EDIT)
     );
   }, [data]);
+
+  if (!hasPermissions) return null;
 
   return (
     <ActionCanButton

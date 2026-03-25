@@ -4,7 +4,7 @@ import * as Metrics from 'components/common/Metrics';
 import { Tag } from 'components/common/Tag/Tag.styled';
 import Switch from 'components/common/Switch/Switch';
 import { useClusters } from 'lib/hooks/api/clusters';
-import { Cluster, ResourceType, ServerStatus } from 'generated-sources';
+import { Action, Cluster, ResourceType, ServerStatus } from 'generated-sources';
 import { ColumnDef } from '@tanstack/react-table';
 import Table, { SizeCell } from 'components/common/NewTable';
 import useBoolean from 'lib/hooks/useBoolean';
@@ -35,6 +35,15 @@ const Dashboard: React.FC = () => {
     };
   }, [clusters, showOfflineOnly]);
 
+  const hasPermissions = useMemo(() => {
+    if (!data?.rbacEnabled) return true;
+    return !!data?.userInfo?.permissions.some(
+      (permission) =>
+        permission.resource === ResourceType.APPLICATIONCONFIG &&
+        permission.actions.includes(Action.EDIT)
+    );
+  }, [data]);
+
   const columns = React.useMemo<ColumnDef<Cluster>[]>(() => {
     const initialColumns: ColumnDef<Cluster>[] = [
       { header: 'Cluster name', accessorKey: 'name', cell: ClusterName },
@@ -55,14 +64,7 @@ const Dashboard: React.FC = () => {
     }
 
     return initialColumns;
-  }, []);
-
-  const hasPermissions = useMemo(() => {
-    if (!data?.rbacEnabled) return true;
-    return !!data?.userInfo?.permissions.some(
-      (permission) => permission.resource === ResourceType.APPLICATIONCONFIG
-    );
-  }, [data]);
+  }, [appInfo.hasDynamicConfig]);
   return (
     <>
       <PageHeading text="Dashboard" />
@@ -87,7 +89,7 @@ const Dashboard: React.FC = () => {
           />
           <label>Only offline clusters</label>
         </div>
-        {appInfo.hasDynamicConfig && (
+        {appInfo.hasDynamicConfig && hasPermissions && (
           <ActionCanButton
             buttonType="primary"
             buttonSize="M"

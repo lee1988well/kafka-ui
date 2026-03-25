@@ -1,0 +1,23 @@
+# 新的管理员用户
+dn: cn=patsnap_admin,ou=people,dc=planetexpress,dc=com
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+cn: patsnap_admin
+sn: Admin
+uid: patsnap_admin
+userPassword: tzh9y4Vo2mto7LkD
+mail: patsnap_admin@example.com
+
+# 新的只读用户
+dn: cn=kafka_read,ou=people,dc=planetexpress,dc=com
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+cn: kafka_read
+sn: Reader
+uid: kafka_read
+userPassword: o8YHgjfeXVbi
+mail: kafka_read@example.com

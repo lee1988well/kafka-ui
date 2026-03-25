@@ -452,7 +452,7 @@ public class AccessControlService {
   private Predicate<Role> filterCluster(String cluster) {
     return grantedRole -> grantedRole.getClusters()
         .stream()
-        .anyMatch(cluster::equalsIgnoreCase);
+        .anyMatch(c -> "*".equals(c) || cluster.equalsIgnoreCase(c));
   }
 
   private Predicate<Role> filterCluster(Resource resource, String cluster) {
