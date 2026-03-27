@@ -1,11 +1,7 @@
 auth:
   type: LDAP
 kafka:
-  clusters:
-  - bootstrapServers: 81.70.127.169:50000
-    name: 测试cn-ckafka-data
-    properties: {}
-    readOnly: false
+  clusters: []
 rbac:
   roles:
   - clusters:
